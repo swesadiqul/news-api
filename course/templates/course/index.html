@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+        News | Home  
+{% endblock title %}
+
+
+{% block content %}
+<section class="search-bar pt-5 mt-5">
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <form class="d-flex" method="get" action="{% url 'home' %}">
+                <input class="form-control me-2" type="search" name="country" placeholder="Search by country name" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+              <small class="text-muted">Possible options: ae ar at au be bg br ca ch cn co cu cz de eg fr gb gr hk hu id ie il in it jp kr lt lv ma mx my ng nl no nz ph pl pt ro rs ru sa se sg si sk th tr tw ua us ve za.</small>
+        </div>
+        <div class="col-6">
+            <form class="d-flex" method="get" action="{% url 'home' %}">
+                <input class="form-control me-2" type="search" name="category" placeholder="Search by category name" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            <small class="text-muted">Possible options: business entertainment general health science sports technology.</small>
+        </div>
+    </div>
+</div>
+</section>
+<section class="news mt-3">
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for article in articles %}
+            <div class="col">
+                <div class="card rounded shadow-lg h-100">
+                    <img src="{{ article.urlToImage }}" class="card-img-top" alt="News" style="height: 200px;">
+                    <div class="card-body">
+                    <small class="text-muted">{{ article.author }} | {{ article.source.name }}</small>
+                      <h5 class="card-title">{{ article.title }}</h5>
+                      <small class="text-muted">Published: {{ article.publishedAt }}</small>
+                      <p class="card-text">{{ article.description|slice:":100" }}</p>
+                      <a href="{{ article.url }}" target="_blank" class="btn btn-primary">See More</a>
+                    </div>
+                  </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}
